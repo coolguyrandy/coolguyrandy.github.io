@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ChirpStack LoRaWAN Implementation for Ebyte E32 UART LoRa Transceivers - Jacob Williams</title>
+
+  <style>
+    body {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#555555" alink="#FF0000">
+
+<center>
+  <h1>Project: ChirpStack LoRaWAN Implementation for Ebyte E32 UART LoRa Transceivers</h1>
+  <p><i>Last updated: April 2026</i></p>
+</center>
+
+<hr>
+
+<center>
+  <a href="index.html">Home</a> |
+  <a href="#overview">Overview</a> |
+  <a href="#details">Technical Details</a> |
+  <a href="#results">Results</a> |
+  <a href="#links">Links</a>
+</center>
+
+<hr>
+
+<table width="800" align="center" border="1" cellpadding="10" cellspacing="0">
+<tr>
+<td>
+
+<a name="overview"></a>
+<h2>Overview</h2>
+<p>
+I completed this project as part of my reserach on implementing asymetric post quantam encryption algorithm in LoRaWAN to replace the standard OTAA join process.
+</p>
+
+<p>
+If you found this page because you are just trying to get a normal LoRaWAN setup running, you're in the right place! I know that there's very little accesible "How-To" guides on getting LoRaWAN setup, so I'm providing this project description in hopes that some might benefit.
+</p>
+
+<hr>
+
+<a name="description"></a>
+<h2>Description</h2>
+
+<p>
+This project implements a functional LoRaWAN network using ChirpStack with custom-built hardware based on BeagleBone Black and Ebyte E32 LoRa modules. The system includes both an end device and a single-channel gateway communicating over UART, with backend infrastructure handling packet forwarding, network management, and application-layer processing.
+</p>
+
+<p>
+This project serves as a practical guide for setting up a minimal LoRaWAN network using accessible hardware and open-source tools. It demonstrates the full data path from RF transmission at the end device to application-layer processing via ChirpStack services.
+</p>
+
+<p>
+The implementation supports both uplink and downlink messages (as required for the OTAA authentication process). One important note: This project did not make use of a dedicated concentrator chip (i.e. SX1302). In lieu of a dedicated concentrator chip, this implemnation uses an EByte E32 LoRa transceiver module. This reduces cost significantly; however, it limits the gateway to listening on only one channel and spreading factor. The LoRaWAN specification requires that all channels can be heard simultaneously, so this implementation is an example of a "Poor man's gateway" and is not fully LoRaWAN compliant. 
+</p>
+
+<hr>
+
+<a name="details"></a>
+<h2>Technical Details</h2>
+
+<p>
+<b>Technologies Used:</b><br>
+Python, LoRa, ChirpStack Open Source LoRaWAN Network Server, Semtech UDP Packet forwarder, ChirpStack Gateway Bridge
+</p>
+
+<p>
+<b>Architecture:</b>
+</p>
+
+  <img src="images/LoRaWANSetup.jpg" width="600"><br><br>
+
+
+<hr>
+
+<p>
+<b>Hardware Components:</b>
+</p>
+
+<ul>
+  <li><b>BeagleboneBlack:</b> SBC w/ 512Mb DDR3L 800MHz SDRAM</li>
+  <li><b>Ebyte E32-433T30D UART Lora Module:</b> LoRa transceiver based on SX1278 433MHz chip</li>
+</ul>
+
+<hr>
+
+<p>
+<b>System Components:</b>
+</p>
+
+<ul>
+  <li><b>End Device:</b> BeagleBone Black w/ Ebyte E32 LoRa Module communicating thru UART</li>
+  <li><b>Gateway:</b> BeagleBone Black running Semtech UDP Packet Forwarder w/ Ebyte E32 LoRa Module communicating thru UART</li>
+  <li><b>Network Server:</b> ChirpStack Open Source LoRaWAN Network Server</li>
+  <li><b>Gateway Bridge:</b> ChirpStack Gateway Bridge handling packet translation between UDP and MQTT</li>
+  <li><b>Packet Forwarder:</b> Semtech UDP Packet Forwarder for gateway communication</li>
+  <li><b>Application Server:</b> Custom Python-based backend for processing uplink/downlink data</li>
+  <li><b>Message Broker:</b> MQTT broker for routing LoRaWAN events across services</li>
+</ul>
+
+
+
+<hr>
+
+<a name="results"></a>
+<h2>Results</h2>
+
+
+<ul>
+  <li>Successfully performed OTAA Join Process between End Device and ChirpStack Network Server</li>
+</ul>
+
+<hr>
+
+<a name="links"></a>
+<h2>Links</h2>
+
+<p>
+<a href="https://github.com/coolguyrandy/LoRaWAN-EByte-E32-Single-Channel-Gateway">[Gateway Implementation - GitHub]</a><br>
+<a href="https://github.com/coolguyrandy/LoRaWAN-Ebyte-E32-End-Node">[End Device Implementation - GitHub]</a><br>
+<a href="https://github.com/chirpstack/chirpstack-docker">[ChirpStack Docker - GitHub]</a><br>
+
+</p>
+
+<hr>
+
+<h2>Images and Screenshots</h2>
+
+<center>
+  <img src="images/EByteE32LoraModule.JPG" width="800"><br>
+  <i>Figure 1: EByte E32 433T30D Transceiver Module</i>
+</center>
+
+<center>
+  <img src="images/BeagleBoneLoRaModule.JPG" width="800"><br>
+  <i>Figure 2: BeagleBone with EByte E32  433T30D Transceiver Module</i>
+</center>
+
+<center>
+  <img src="images/ChirpStackEndNodeOTAASucessRedacted.png" width="800"><br>
+  <i>Figure 3: Successful OTAA Join (Keys redacted out of principle), End node</i>
+</center>
+
+<center>
+  <img src="images/ChirpStackGatewayOTAASuccess.png" width="800"><br>
+  <i>Figure 4: Successful OTAA Join, Gateway</i>
+</center>
+
+<center>
+  <img src="images/ChirpStackServerOTAASuccess.png" width="800"><br>
+  <i>Figure 4: Successful OTAA Join, ChirpStack Server</i>
+</center>
+
+<br>
+<hr>
+
+<center>
+  <p><a href="index.html">[Back to Home]</a></p>
+</center>
+
+</td>
+</tr>
+</table>
+
+<hr>
+
+<center>
+  <p>© 2026 Jacob Williams</p>
+</center>
+
+</body>
+</html>
