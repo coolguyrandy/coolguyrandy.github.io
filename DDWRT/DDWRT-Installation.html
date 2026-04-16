@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DD-WRT Installation on RP7000 Router - Jacob Williams</title>
+
+  <style>
+    body {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#555555" alink="#FF0000">
+
+<center>
+  <h1>Project: DD-WRT Installation on NETGEAR R7000</h1>
+  <p><i>Last updated: April 2026</i></p>
+</center>
+
+<hr>
+
+<center>
+  <a href="../index.html">Home</a> |
+  <a href="#overview">Overview</a> |
+  <a href="#details">Technical Details</a> |
+  <a href="#steps">Steps</a> |
+  <a href="#downloads">Downloads</a>
+</center>
+
+<hr>
+
+<table width="800" align="center" border="1" cellpadding="10" cellspacing="0">
+<tr>
+<td>
+
+<a name="overview"></a>
+<h2>Overview</h2>
+<p>
+This is part of a larger DD-WRT project. This page describes the process I used to install DD-WRT on my NETGEAR R7000 router.
+</p>
+
+<hr>
+
+<a name="details"></a>
+<h2>Technical Details</h2>
+
+<p>
+<b>Host Computer:</b><br>
+The host computer I used is an HP ZBook G14 running Debian 12 (bookworm).
+</p>
+
+<p>
+<b>Router:</b><br>
+The router used is a NETGEAR R7000 Nighthawk router.    
+</p>
+
+<center>
+  <img src="../images/DDWRT/NETGEARR7000.JPG" width="800"><br>
+  <i>Figure 1: NETGEAR R7000 Router Front</i>
+</center>
+
+<center>
+  <img src="../images/DDWRT/NETGEARR7000BACK.JPG" width="800"><br>
+  <i>Figure 2: NETGEAR R7000 Router Back (Redacted out of principle)</i>
+</center>
+
+<hr>
+
+<p>
+    <a name="downloads"></a>
+<b>Downloads:</b>
+</p>
+
+<ul>
+  <li><a href="https://dd-wrt.com/support/router-database/?model=R7000_v1">[DD-WRT Firmware for R7000]</a></li>
+  <p>
+    Note: I used the Factory Image version
+  </p>
+  <li><a href="https://github.com/jclehner/nmrpflash">[NMRP flashing utility]</a></li>
+  <p>
+    Note: jclehner is kind enough to provide pre-built binaries that work on POSIX-compliant systems. I used this prebuilt binary on my Debian 12 bookworm installation.
+  </p>
+</ul>
+
+<hr>
+
+<a name="steps"></a>
+<h2>Steps</h2>
+
+<ol>
+<li><strong> TURN OFF ALL INTERFACES EXCEPT FOR THE ETHERNET INTERFACE YOU WILL USE TO CONNECT TO THE ROUTER.</strong> </li>
+  <li>Download the DD-WRT firmware image from the link above.</li>
+  <li>Turn off the router.</li>
+  <li>Connect your computer to the router via Ethernet.</li>
+  <li>Find the name of the Ethernet interface that is connected to the router (in my case eno1).</li>
+  <li>Execute the following command: <pre><code>sudo nmrpflash -i {interface name} -f {path to firmware image}</code></pre></li>
+  <li>You should see the following: 
+    <pre><code>Waiting for Ethernet Connection (Ctr-C to skip)</code></pre>
+  </li>
+  <li>Once you see this, turn the router back on and wait. The flashing process will automatically start.</li> <strong>DO NOT TURN OFF COMPUTER, ROUTER, OR ETHERNET CABLE DURING THIS PROCESS</strong></li>
+  <li>Upon completion, you will see the following:</li>
+  <pre><code>Advertising NMRP server on eth2 ... /
+    Received configuration request from {router MAC}
+    Sending configuration: {IP}
+    Received upload request: filename 'firmware'.
+    Uploading{firmware image filename} ... OK (3539077 b)
+    Waiting for remote to respond.
+    Received keep-alive request (11).
+    Remote finished. Closing connection.
+    Reboot your device now.
+</code></pre>
+<li>Now you're done! Reboot the device and connect to the router portal. You should see the following:</li>
+<center>
+  <img src="../images/DDWRT/DDWRTLoginPage.png" width="800"><br>
+  <i>Figure 3: NETGEAR R7000 Router Front</i>
+</center>
+</ol>
+
+<br>
+<hr>
+
+<center>
+  <p><a href="../index.html">[Back to Home]</a></p>
+</center>
+
+</td>
+</tr>
+</table>
+
+<hr>
+
+<center>
+  <p>© 2026 Jacob Williams</p>
+</center>
+
+</body>
+</html>
